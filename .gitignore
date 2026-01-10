@@ -1,0 +1,45 @@
+# Output files
+out/
+*.txt
+*.csv
+*.json
+*.jsonl
+*.xml
+*.html
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Credentials and secrets
+*.cnf
+*.conf.local
+*_credentials
+*_password
+.pgpass
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Script execution artifacts
+secpol.cfg
+*.inf
+
+# Evidence and results directories
+evidence/
+results/

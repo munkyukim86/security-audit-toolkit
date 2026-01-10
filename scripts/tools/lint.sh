@@ -1,24 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-cd "$ROOT_DIR"
+# Lint all bash scripts in this repository.
+# - ShellCheck
+# - shfmt (diff-only)
+# - bash -n syntax check
 
-echo "[*] Lint bash scripts with ShellCheck (if installed)"
-if command -v shellcheck >/dev/null 2>&1; then
-  mapfile -t SH_FILES < <(git ls-files '*.sh')
-  if [ "${#SH_FILES[@]}" -gt 0 ]; then
-    shellcheck -x "${SH_FILES[@]}"
-  fi
-else
-  echo "[!] shellcheck not found; skip"
+if ! command -v shellcheck >/dev/null 2>&1; then
+  echo "[ERROR] shellcheck not found" >&2
+  exit 1
+fi
+if ! command -v shfmt >/dev/null 2>&1; then
+  echo "[ERROR] shfmt not found" >&2
+  exit 1
 fi
 
-echo "[*] Format bash scripts with shfmt (check mode)"
-if command -v shfmt >/dev/null 2>&1; then
-  shfmt -d $(git ls-files '*.sh')
-else
-  echo "[!] shfmt not found; skip"
+mapfile -d '' -t files < <(find scripts -type f -name '*.sh' -print0)
+
+if ((${#files[@]} == 0)); then
+  echo "No bash scripts found under scripts/."
+  exit 0
 fi
 
-echo "[*] Done"
+echo "==> Running ShellCheck on ${#files[@]} file(s)..."
+shellcheck -x "${files[@]}"
+
+echo "==> Running shfmt (diff-only)..."
+shfmt -d -i 2 -ci -sr "${files[@]}"
+
+echo "==> Running bash -n syntax check..."
+for f in "${files[@]}"; do
+  bash -n "$f"
+done
+
+echo "All bash scripts passed lint checks."

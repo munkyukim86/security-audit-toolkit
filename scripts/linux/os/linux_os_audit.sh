@@ -1102,7 +1102,7 @@ check_U_62() {
   append "▶ 증적(잠금/패스워드 상태)"
   if has_cmd passwd; then
     # passwd -S 는 일부 배포판에서만 제공
-      passwd -S rootu" 2>/dev/null >> "${OUTFILE}" || true
+      passwd -S "root"" 2>/dev/null >> "${OUTFILE}" || true
   fi
   result_line "U-62" "수동 점검 필요 - 서비스 계정 잠금/만료 정책 검토"
 }

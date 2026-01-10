@@ -329,7 +329,7 @@ check_U_09() {
   append "▶ 증적(로그인 가능 계정의 홈 디렉토리 권한)"
   awk -F: '($7!="/sbin/nologin" && $7!="/bin/false"){print $1":"$6":"$7}' /etc/passwd 2>/dev/null | head -n 200 >> "${OUTFILE}" || true
   # 자동 판정: 홈 디렉토리가 존재하며 others write 권한이 있는지
-  local bad=0 user home
+  local bad=0 line user home
   while IFS=: read -r user home _shell; do
     [ -z "$home" ] && continue
     [ ! -d "$home" ] && continue
@@ -1102,7 +1102,9 @@ check_U_62() {
   append "▶ 증적(잠금/패스워드 상태)"
   if has_cmd passwd; then
     # passwd -S 는 일부 배포판에서만 제공
-      passwd -S "root"" 2>/dev/null >> "${OUTFILE}" || true
+    for u in root; do
+      passwd -S "$u" 2>/dev/null >> "${OUTFILE}" || true
+    done
   fi
   result_line "U-62" "수동 점검 필요 - 서비스 계정 잠금/만료 정책 검토"
 }

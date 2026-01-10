@@ -114,6 +114,8 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 LIST_JSON="$TMP_DIR/webacls.json"
+GET_JSON="$TMP_DIR/webacl.json"
+LOG_JSON="$TMP_DIR/logging.json"
 
 # AWS WAFv2: list web ACLs
 section "WAF-01" "WAF(Web ACL) 사용 여부" "상"
@@ -121,7 +123,7 @@ if ! aws --profile "$PROFILE" --region "$REGION" wafv2 list-web-acls --scope "$S
   err="$(cat "$TMP_DIR/list.err" || true)"
   result_line "WAF-01" "수동" "Web ACL 목록 조회 실패. 권한/리전/스코프를 확인하세요.\n${err}"
 else
-  cnt="$(python3 - <<'PY'
+  cnt="$(OUTFILE="$OUTFILE" PROFILE="$PROFILE" REGION="$REGION" SCOPE="$SCOPE" LIST_JSON="$LIST_JSON" GET_JSON="$GET_JSON" LOG_JSON="$LOG_JSON" python3 - <<'PY'
 import json,sys
 j=json.load(open(sys.argv[1],'r',encoding='utf-8'))
 print(len(j.get('WebACLs',[])))
@@ -131,7 +133,7 @@ PY
   if [[ "$cnt" -eq 0 ]]; then
     result_line "WAF-01" "취약" "Web ACL이 없습니다. 보호 대상(CloudFront/ALB/API Gateway 등)에 WAF 적용 여부를 확인하십시오."
   else
-    details="$(python3 - <<'PY'
+    details="$(OUTFILE="$OUTFILE" PROFILE="$PROFILE" REGION="$REGION" SCOPE="$SCOPE" LIST_JSON="$LIST_JSON" GET_JSON="$GET_JSON" LOG_JSON="$LOG_JSON" python3 - <<'PY'
 import json,sys
 j=json.load(open(sys.argv[1],'r',encoding='utf-8'))
 for w in j.get('WebACLs',[]):
@@ -147,7 +149,7 @@ section "WAF-02" "WAF 룰(Managed Rules 포함) 적용" "상"
 section "WAF-03" "WAF 로깅(감사/추적) 활성화" "상"
 section "WAF-04" "WAF 가시성(메트릭/샘플링) 설정" "중"
 
-python3 - <<'PY'
+OUTFILE="$OUTFILE" PROFILE="$PROFILE" REGION="$REGION" SCOPE="$SCOPE" LIST_JSON="$LIST_JSON" GET_JSON="$GET_JSON" LOG_JSON="$LOG_JSON" python3 - <<'PY'
 import json, os, subprocess, sys
 
 outfile = os.environ['OUTFILE']

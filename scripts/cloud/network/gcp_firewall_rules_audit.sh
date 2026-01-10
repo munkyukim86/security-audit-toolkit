@@ -109,7 +109,7 @@ if ! gcloud compute firewall-rules list --project="$PROJECT" --format=json >"$RU
 fi
 
 section "GCP-01" "인바운드 SSH/RDP 공개(0.0.0.0/0)" "상"
-python3 <<'PY' >>"$OUTFILE"
+RULES_JSON="$RULES_JSON" NETWORK_FILTER="$NETWORK_FILTER" python3 <<'PY' >>"$OUTFILE"
 import json, os, re
 
 path = os.environ["RULES_JSON"]
@@ -175,7 +175,7 @@ else:
 PY
 
 section "GCP-02" "과도하게 허용된 인바운드 룰(전체포트/ALL)" "상"
-python3 <<'PY' >>"$OUTFILE"
+RULES_JSON="$RULES_JSON" NETWORK_FILTER="$NETWORK_FILTER" python3 <<'PY' >>"$OUTFILE"
 import json, os
 
 path = os.environ["RULES_JSON"]
@@ -234,7 +234,7 @@ else:
 PY
 
 section "GCP-03" "방화벽 룰 로깅(logConfig)" "중"
-python3 <<'PY' >>"$OUTFILE"
+RULES_JSON="$RULES_JSON" NETWORK_FILTER="$NETWORK_FILTER" python3 <<'PY' >>"$OUTFILE"
 import json, os
 
 path = os.environ["RULES_JSON"]

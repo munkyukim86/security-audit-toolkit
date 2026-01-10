@@ -117,7 +117,7 @@ result_line "CA-01" "양호" "보안정책 존재: ${POLICY}"
 ) >"$ATTACH_JSON"
 
 section "CA-02" "보안정책 규칙(룰) 구성" "상"
-python3 <<'PY' >>"$OUTFILE"
+POLICY_JSON="$POLICY_JSON" python3 <<'PY' >>"$OUTFILE"
 import json, os
 
 policy_path = os.environ["POLICY_JSON"]
@@ -158,7 +158,7 @@ else:
 PY
 
 section "CA-03" "로깅(LogConfig) 설정" "상"
-python3 <<'PY' >>"$OUTFILE"
+POLICY_JSON="$POLICY_JSON" python3 <<'PY' >>"$OUTFILE"
 import json, os
 
 policy_path = os.environ["POLICY_JSON"]
@@ -185,7 +185,7 @@ print("")
 PY
 
 section "CA-04" "로드밸런서/백엔드 서비스에 정책 연결" "상"
-python3 <<'PY' >>"$OUTFILE"
+POLICY_JSON="$POLICY_JSON" python3 <<'PY' >>"$OUTFILE"
 import json, os
 
 attach_path = os.environ["ATTACH_JSON"]

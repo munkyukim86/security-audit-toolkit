@@ -19,6 +19,9 @@
 - PostgreSQL: `psql`
 - MongoDB: `mongosh`
 - MS SQL: `SqlServer` PowerShell module (`Invoke-Sqlcmd`)
+
+- Oracle: `sqlplus` (Oracle Client)
+- Tibero: `tbsql` (Tibero Client)
 - IBM Db2:
   - Linux: `db2` CLI, (선택) `db2audit`
   - Windows: `db2cmd`, `db2` CLI, (선택) `db2audit`

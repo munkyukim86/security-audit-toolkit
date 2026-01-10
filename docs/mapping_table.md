@@ -124,3 +124,15 @@
 | `scripts/windows/was/iis_audit_v1.ps1` | `IIS-02` | 상세 오류/스택노출 최소화(customErrors/httpErrors) | 중 | KISA 2021 (IIS) |
 | `scripts/windows/was/iis_audit_v1.ps1` | `IIS-03` | Request Filtering (Double Escaping/Max Content) | 중 | KISA 2021 (IIS) |
 | `scripts/windows/was/iis_audit_v1.ps1` | `IIS-04` | HTTPS 바인딩/SSL 설정 | 상 | KISA 2021 (IIS) |
+| `scripts/linux/db/oracle_audit_v1_linux.sh` | `ORA-00` | 사전 점검(sqlplus) | 상 | KISA 2021 (DB) |
+| `scripts/linux/db/oracle_audit_v1_linux.sh` | `ORA-01` | SQL*Plus 증적 수집(스풀) | 상 | KISA 2021 (DB) |
+| `scripts/linux/db/tibero_audit_v1_linux.sh` | `TIB-00` | 사전 점검(tbsql) | 상 | KISA 2021 (DB) |
+| `scripts/linux/db/tibero_audit_v1_linux.sh` | `TIB-01` | tbsql 증적 수집(스풀) | 상 | KISA 2021 (DB) |
+| `scripts/windows/db/oracle_audit_v1.ps1` | `ORA-00` | 사전 점검(sqlplus) | 상 | KISA 2021 (DB) |
+| `scripts/windows/db/oracle_audit_v1.ps1` | `ORA-01` | SQL*Plus 증적 수집(스풀) | 상 | KISA 2021 (DB) |
+| `scripts/windows/db/tibero_audit_v1.ps1` | `TIB-00` | 사전 점검(tbsql) | 상 | KISA 2021 (DB) |
+| `scripts/windows/db/tibero_audit_v1.ps1` | `TIB-01` | tbsql 증적 수집(스풀) | 상 | KISA 2021 (DB) |
+| `scripts/linux/was/tomcat_audit_v1.sh` | `TC-00` | 사전 점검(CATALINA_BASE) | 상 | KISA 2021 (WAS) |
+| `scripts/linux/was/tomcat_audit_v1.sh` | `TC-02` | 관리 콘솔(Manager/Host-Manager) 노출 | 상 | KISA 2021 (WAS) |
+| `scripts/linux/was/tomcat_audit_v1.sh` | `TC-03` | Directory Listing 비활성화 | 상 | KISA 2021 (WAS) |
+| `scripts/linux/was/tomcat_audit_v1.sh` | `TC-04` | AJP Connector 설정 | 상 | KISA 2021 (WAS) |

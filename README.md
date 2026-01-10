@@ -67,3 +67,9 @@ All scripts write a report to `--out-dir` (default: current directory) and set s
 - Some checks require elevated privileges (root / Administrator) and/or application-specific permissions.
 - Network device audits assume SSH key-based auth (recommended).
 - Results may contain sensitive details; do not commit outputs to Git.
+
+## 추가된 커버리지(2026-01-10)
+
+- DB: Oracle(sqlplus), Tibero(tbsql) 증적 수집 래퍼
+- WAS(Linux): Tomcat 점검 스크립트(v1)
+

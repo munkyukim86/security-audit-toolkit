@@ -143,7 +143,8 @@ init_connection() {
   # Prompt for password and generate temp defaults file
   printf "MySQL password for %s@%s (leave empty for none): " "${DB_USER}" "${DB_HOST}"
   stty -echo 2>/dev/null || true
-  read -r DB_PASS
+  DB_PASS=""
+  read -r DB_PASS || DB_PASS=""
   stty echo 2>/dev/null || true
   printf "\n"
 

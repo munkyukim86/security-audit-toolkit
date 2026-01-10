@@ -103,7 +103,8 @@ init_connection() {
   fi
   printf "PostgreSQL password for %s@%s (leave empty for none): " "${PG_USER}" "${PG_HOST}"
   stty -echo 2>/dev/null || true
-  read -r PG_PASS
+  PG_PASS=""
+  read -r PG_PASS || PG_PASS=""
   stty echo 2>/dev/null || true
   printf "\n"
   TMP_PGPASS="$(mktemp 2>/dev/null || echo /tmp/pgpass.$$)"

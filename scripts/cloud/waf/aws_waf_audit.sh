@@ -114,8 +114,6 @@ cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
 LIST_JSON="$TMP_DIR/webacls.json"
-GET_JSON="$TMP_DIR/webacl.json"
-LOG_JSON="$TMP_DIR/logging.json"
 
 # AWS WAFv2: list web ACLs
 section "WAF-01" "WAF(Web ACL) 사용 여부" "상"

@@ -329,8 +329,8 @@ check_U_09() {
   append "▶ 증적(로그인 가능 계정의 홈 디렉토리 권한)"
   awk -F: '($7!="/sbin/nologin" && $7!="/bin/false"){print $1":"$6":"$7}' /etc/passwd 2>/dev/null | head -n 200 >> "${OUTFILE}" || true
   # 자동 판정: 홈 디렉토리가 존재하며 others write 권한이 있는지
-  local bad=0 line user home
-  while IFS=: read -r user home _shell; do
+    local bad=0 user home
+    while IFS=: read -r user home _shell; do
     [ -z "$home" ] && continue
     [ ! -d "$home" ] && continue
     local mode

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "google/gemini-3-pro-preview",
+  "small_model": "google/gemini-3-flash-preview",
+  "context": {
+    "project_type": "security-audit-toolkit",
+    "description": "Comprehensive security vulnerability assessment scripts for Windows/Linux/Cloud/DB/WAS"
+  },
+  "rules": [
+    "NEVER access, read, or output contents of .env files, secrets/ directory, or any files containing credentials, API keys, or certificates",
+    "NEVER execute destructive commands: rm -rf, registry modifications, firewall rule changes, or any commands that could damage system integrity",
+    "ALWAYS require explicit user approval before running any command that modifies files, creates commits, or changes system state",
+    "When creating Pull Requests, ALWAYS include: reason for change, security impact assessment, and test results",
+    "For security audit scripts (Oracle, Tibero, DB2, Tomcat, etc.), focus on read-only operations and evidence collection",
+    "All database audit scripts must use read-only connections when possible",
+    "Output files should be timestamped and marked with appropriate permissions (600 or 400)",
+    "Follow KISA 2021 baseline, Cloud Vulnerability Guide 2024, and TLP Network Guide 2024 standards"
+  ],
+  "ignore": [
+    "*.env",
+    "secrets/",
+    "*.key",
+    "*.pem",
+    "*.crt",
+    "*.pfx",
+    "out/",
+    "*.log",
+    "*_report_*.txt"
+  ]
+}

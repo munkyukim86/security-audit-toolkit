@@ -73,3 +73,146 @@ All scripts write a report to `--out-dir` (default: current directory) and set s
 - DB: Oracle(sqlplus), Tibero(tbsql) 증적 수집 래퍼
 - WAS(Linux): Tomcat 점검 스크립트(v1)
 
+
+
+## AI-Assisted Development with OpenCode / Antigravity
+
+This repository is configured for AI-assisted development using **OpenCode** (compatible with Antigravity IDE).
+
+### Quick Setup
+
+#### 1. Install OpenCode
+
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+
+Or via npm:
+```bash
+npm install -g opencode
+```
+
+#### 2. Configure Model (Google Gemini)
+
+The repository is pre-configured to use Google Gemini models (see `.opencode.json`):
+- **Primary model**: `google/gemini-3-pro-preview`
+- **Small model**: `google/gemini-3-flash-preview`
+
+**Option A: Using OpenCode Zen (Recommended)**
+```bash
+opencode /connect
+# Select "Zen" and follow authentication steps
+```
+
+**Option B: Direct Google AI Connection**
+```bash
+opencode /connect
+# Select "Google" and enter your API key
+# Get API key from: https://makersuite.google.com/app/apikey
+```
+
+**Option C: Antigravity Integration (via plugin)**
+
+If using Antigravity IDE, install the OpenCode plugin:
+```bash
+npm install -g opencode-antigravity-auth@beta
+```
+
+Then configure in `~/.config/opencode/opencode.json`:
+```json
+{
+  "plugin": ["opencode-antigravity-auth@beta"],
+  "provider": {
+    "google": {
+      "models": {
+        "antigravity-gemini-3-pro": {
+          "name": "Gemini 3 Pro (Antigravity)"
+        }
+      }
+    }
+  }
+}
+```
+
+#### 3. Initialize in Project
+
+```bash
+cd security-audit-toolkit
+opencode /init
+# This creates AGENTS.md with project rules (already included in repo)
+```
+
+### Usage Examples
+
+#### Start OpenCode in Terminal
+```bash
+opencode
+# Or in VS Code/Antigravity: Press Cmd+Esc (Mac) or Ctrl+Esc (Windows)
+```
+
+#### Example Commands
+
+**Add a new audit check:**
+```
+Add Oracle password policy check based on KISA DB U-02
+```
+
+**Fix linting errors:**
+```
+Run shellcheck on scripts/linux/db/oracle_audit_v1.sh and fix all errors
+```
+
+**Create a new cloud audit script:**
+```
+Create AWS CloudTrail audit script following the pattern in scripts/cloud/waf/aws_waf_audit.sh
+```
+
+### Security Rules (Enforced by AI Agent)
+
+The AI agent follows strict security rules defined in `AGENTS.md`:
+
+❌ **PROHIBITED:**
+- Accessing `.env`, `secrets/`, or credential files
+- Executing destructive commands (`rm -rf`, registry/firewall changes)
+- Modifying files without explicit user approval
+
+✅ **REQUIRED:**
+- Read-only database connections
+- User confirmation before commits/modifications
+- PR descriptions must include: reason, security impact, test results
+
+### GitHub Integration (Optional)
+
+OpenCode can work directly in GitHub issues/PRs:
+
+1. Install GitHub App: [OpenCode GitHub Integration](https://github.com/apps/opencode)
+2. In any issue or PR, comment:
+   ```
+   /opencode Fix the ShellCheck errors in this PR
+   ```
+
+### Troubleshooting
+
+**Issue: Model not found**
+```bash
+opencode /models  # List available models
+opencode /connect # Re-authenticate
+```
+
+**Issue: API rate limits**
+- Use smaller model for simple tasks: `@small Fix this typo`
+- Switch to OpenCode Zen for team quota management
+
+**Issue: Antigravity plugin not loading**
+```bash
+opencode --version  # Verify installation
+npm list -g opencode-antigravity-auth  # Check plugin
+```
+
+### References
+
+- [OpenCode Documentation](https://opencode.ai/docs/)
+- [OpenCode GitHub](https://github.com/opencode-ai/opencode)
+- [Antigravity Plugin](https://github.com/NoeFabris/opencode-antigravity-auth)
+- [Security Rules (AGENTS.md)](./AGENTS.md)
+- [Configuration (.opencode.json)](./.opencode.json)

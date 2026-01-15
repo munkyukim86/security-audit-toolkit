@@ -31,8 +31,8 @@ $ErrorActionPreference = "Stop"
 
 $GUIDE_VER = "KISA 2021 / Cloud Guide 2024 / TLP Network 2024"
 $DATE = Get-Date -Format "yyyyMMdd_HHmmss"
-$HOST = $env:COMPUTERNAME
-$OUTFILE = Join-Path $OutDir "${SwId}__${HOST}__AzureAppGwWAF__${DATE}__result.txt"
+$TargetHost = $env:COMPUTERNAME
+$OUTFILE = Join-Path $OutDir "${SwId}__${TargetHost}__AzureAppGwWAF__${DATE}__result.txt"
 
 function Section {
   param([string]$Id,[string]$Title,[string]$Severity)
